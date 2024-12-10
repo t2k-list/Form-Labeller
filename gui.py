@@ -29,6 +29,9 @@ class GUI():
         self.root.maxsize(INIT_WIDTH,INIT_HEIGHT)
         self.supported_formats = SUPPORTED_FORMATS
 
+        self.root.bind("<Escape>", self.deselect_all_keybind)
+        self.root.bind("<Control-a>", self.select_all_keybind)
+
         self.left_frame = Frame(self.root,width = BUTTON_WIDTH)
         self.top_frame1 = Frame(self.left_frame,width = BUTTON_WIDTH,height = int(INIT_HEIGHT/2))
         self.top_frame = Frame(self.left_frame,width = BUTTON_WIDTH,height = INIT_HEIGHT - int(INIT_HEIGHT/2))
@@ -141,6 +144,15 @@ class GUI():
         self.hide_buttons()
         self.load_image_directory_button.config(state = "normal")
         
+
+    def select_all_keybind(self, event=None, **kwargs):
+        for poly in self.img_cnv.polygons:
+            poly.select_polygon()
+    
+    def deselect_all_keybind(self, event=None, **kwargs):
+        for poly in self.img_cnv.polygons:
+            poly.deselect_poly()
+    
     def save_tight(self):
         self.tight_box_obj.save_tight_box()
         self.tight_save_button.grid_forget()
