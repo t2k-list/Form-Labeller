@@ -31,6 +31,10 @@ class GUI():
 
         self.root.bind("<Escape>", self.deselect_all_keybind)
         self.root.bind("<Control-a>", self.select_all_keybind)
+        self.root.bind("<t>", self.make_tight_keybind)
+        self.root.bind("<y>", self.save_tight_keybind)
+        self.root.bind("<r>", self.discard_tight_keybind)
+        
 
         self.left_frame = Frame(self.root,width = BUTTON_WIDTH)
         self.top_frame1 = Frame(self.left_frame,width = BUTTON_WIDTH,height = int(INIT_HEIGHT/2))
@@ -153,6 +157,15 @@ class GUI():
         for poly in self.img_cnv.polygons:
             poly.deselect_poly()
     
+    def make_tight_keybind(self, event=None, **kwargs):
+        self.make_tight()
+    
+    def save_tight_keybind(self, event=None, **kwargs):
+        self.save_tight()
+    
+    def discard_tight_keybind(self, event=None, **kwargs):
+        self.discard_tight()
+    
     def save_tight(self):
         self.tight_box_obj.save_tight_box()
         self.tight_save_button.grid_forget()
@@ -160,6 +173,7 @@ class GUI():
         self.make_tight_button.grid(row = MAKE_TIGHT_ROW, columnspan=2, sticky = tk.W+tk.E)
         self.show_buttons()
         self.tight_box_obj = None
+        self.deselect_all()
     
     def toggle_auto_tight(self):
         self.auto_tight_poly = not self.auto_tight_poly
